@@ -58,6 +58,11 @@ $(function(){
 
     $('button#stand').click(function(e){
         stood = 1;
+        checkResult();
+        if ((computerScore[0] >= playerScore[0])&&(computerScore[0]<=21)){
+            gameOver = 1;
+            $('footer h2#note').html('Computer won!')
+        }
         setInterval(function(){
             computerDrawCard()
             setInterval(function(){
