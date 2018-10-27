@@ -6,12 +6,12 @@
     <title>Blackjack</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="./main.css" />
 </head>
 <body>
     <header>
-        <h1>Blackjack (Simple)</h1>
+        <h1>Blackjack</h1>
         <small>
             <a href="https://www.youtube.com/watch?v=-9YGKFdP6sY" id="help">
                 Don't know how to play?
@@ -21,7 +21,7 @@
 
     <section class="main" id="computer">
         <h2>
-            Computer Score: 0
+            Dealer Score: 0
         </h2>
         <section>
             <div class="card"></div>
@@ -30,17 +30,21 @@
             <div class="card"></div>
             <div class="card"></div>
         </section>
+        <div class="overlay"></div>
     </section>
 
     <section id="money">
         <div id="side">
-
+            <button id="bet">Bet 100</button>
+            <button id="start">Start</button>
         </div>
         <div id="table">
-
+            <i class="fas fa-coins"></i>
+            <p>0</p>
         </div>
         <div id="hand">
-            
+            <i class="fas fa-coins"></i>
+            <p>1000</p>
         </div>
     </section>
 
@@ -55,13 +59,14 @@
             <div class="card"></div>
             <div class="card"></div>
         </section>
+        <div class="overlay"></div>
     </section>
 
     <footer>
         <div class="button-row">
             <button id="hit">Hit</button>
             <button id="stand">Stand</button>
-            <button id="again" onClick="window.location.reload()">Again</button>
+            <button id="again">Nxt round</button>
         </div>
     </footer>
 

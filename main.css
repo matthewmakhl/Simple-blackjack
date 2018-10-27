@@ -37,7 +37,7 @@ h2 {
 }
 
 section#computer {
-    background-color: #444;
+    background-color: #333;
     height: 32vh;
 }
 
@@ -106,6 +106,12 @@ button.active {
     border-bottom: none;
 }
 
+button.inactive {
+    background-color: #bbb;
+    transition: background-color 1s;
+    border-bottom: none;
+}
+
 footer h2 { 
     text-align: start;
 }
@@ -121,10 +127,32 @@ p {
     margin: auto 5px;
 }
 
+.overlay{
+    height: 32vh;
+    width: 100%;
+    position: absolute;
+    opacity: 0;
+    background-color: #64B058;
+    transition: opacity 1s;
+    /* line-height: 32vh; */
+    text-align: center;
+    font-size: 8vh;
+}
+
+.overlay.win {
+    opacity: 0.7;
+}
+
+.overlay.lose {
+    opacity: 0.7;
+    background: #D46A6A;
+}
+
 section#money {
     height: 16vh;
     width: 60vw;
-    margin: 0 auto;
+    padding: 0 20vw;
+    background-color: #444;
     display: grid;
     grid-template-rows: 70% 30%;
     grid-template-columns: 30% 70%;
@@ -135,20 +163,39 @@ section#money {
 
 #money #side {
     grid-area: side;
-    background-color: #888;
+    /* background-color: #888; */
     border-radius: 10px;    
+}
+
+#side button {
+    margin: 5px auto;
 }
 
 #money #table{
     grid-area: table;
-    background-color: #81C18F;
-    border-radius: 10px;
+    background-color: #ddd;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 #money #hand{
     grid-area: hand;
-    background-color: #FFFFAA;
+    /* background-color: #FFFFAA; */
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    color: white;
+}
+
+#hand i, #table i {
+    font-size: 3vh;
+    margin: auto 0;
 }
 
 @media (max-width: 768px) {
@@ -180,8 +227,12 @@ section#money {
         border-bottom: solid 2px #666;
         border-radius: 5px;
         margin: auto 10px;
-        padding: 10px;
-        font-size: 20px;
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    #side button {
+        margin: 2px;
     }
 
     section.main section {
@@ -190,7 +241,7 @@ section#money {
 
     p {
         text-align: center;
-        font-size: 30px;
+        font-size: 24px;
     }
 
     img {
@@ -200,7 +251,24 @@ section#money {
     }
 
     footer {
-        height: 12vh;
+        height: 16vh;
     }
 
+    section#money {
+        width: 100vw;
+        padding: 0;
+    }
+
+    a#help {
+        margin: 0 10px;
+    }
+
+    div.button-row {
+        margin-top: 5px;
+        margin-bottom: auto;
+    }
+
+    .overlay{
+        font-size: 7vh;
+    }
 }
