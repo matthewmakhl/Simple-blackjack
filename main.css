@@ -1,0 +1,143 @@
+body {
+    margin: 0;
+    background-color: #222;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 10vh;
+}
+
+h1 {
+    font-size: 40px;
+    text-align: center;
+    background-color: #222;
+    margin: auto 0;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    margin: 10px 0;
+}
+
+section#computer {
+    background-color: #444;
+    height: 32vh;
+}
+
+section#player {
+    background-color: #666;
+    height: 32vh;
+}
+
+section.main {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-flow: column wrap;
+}
+
+section.main section {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-flow: row wrap;
+    height: 240px;
+}
+
+div.card{
+    border-radius: 15px;
+    height: 200px;
+    width: 120px;
+    margin: 20px;
+    background-color: #bbb;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    color: black;
+}
+
+footer {
+    background-color: #888;
+    height: 26vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-flow: column wrap;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-flow: row wrap;
+}
+
+button {
+    background: #666;
+    border-bottom: solid 4px #666;
+    border-radius: 10px;
+    margin: auto 10px;
+    padding: 10px;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+button.active {
+    background: #888;
+    transform: translateY(4px);
+    border-bottom: none;
+}
+
+footer h2 {
+    margin: 20px;
+    text-align: start;
+}
+
+img {
+    height: 50px;
+    width: 50px;
+    margin: auto 5px;
+}
+
+p {
+    font-size: 40px;
+    margin: auto 5px;
+}
+
+@media (max-width: 768px) {
+    div.card {
+        border-radius: 8px;
+        height: 120px;
+        width: 70px;
+        margin: 10px;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-content: center;
+    }
+
+    button {
+        border-bottom: solid 2px #666;
+        border-radius: 5px;
+        margin: auto 10px;
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    section.main section {
+        height: 180px;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    img {
+        margin: 5px auto;
+    }
+}
