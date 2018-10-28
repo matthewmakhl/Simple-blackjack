@@ -15,8 +15,12 @@ let playerScore = [0,0,0];
 let gameOver = 1;
 let initCard = [0,1,2,3,4,5,6,7,8,9]
 let stood = 0;
-let playerMoney = 1000;
+let playerMoney = 2000;
 let tableMoney = 0;
+
+// Pending feature: Split, Insurance, Bet money of choice
+// Testing feature: Push, Blackjack
+// Added feature Bet, Start, Hit, Stand, Next Round, Double Down, Surrender, 
 
 $(function(){
     
@@ -24,16 +28,16 @@ $(function(){
     $('button#hit').addClass('inactive');
     $('button#stand').addClass('inactive');
     $('button#again').addClass('inactive');
+    $('button#split').addClass('inactive');
     $('button#dd').addClass('inactive');
     $('button#surrender').addClass('inactive');
 
-    // hit card function
+    // Hit button
     $('button#hit').click(function(e){
         if (!gameOver) {
             $('button#bet').addClass('inactive');
             $('button#start').addClass('inactive');
             if (playerRound<5){
-                // Player's move
                 $(`#player div.card:eq(${playerRound})`).fadeToggle();
                 card = getRandomCard(deck);
                 $(`#player div.card:eq(${playerRound})`).append(`<img src="./images/${card[0]}.png"></img>`);
@@ -44,7 +48,6 @@ $(function(){
                 playerRound ++;
                 $('button#dd').addClass('inactive');
             } else {
-                $('footer h2#note').html('Sorry you can only have 5 cards on hand. Let me press stand for you')
                 $('button#stand').trigger('click')
             }
         }
@@ -75,28 +78,27 @@ $(function(){
         },(500));
     }
 
+    // Start button
     $('button#start').click(function(){
         if ($('button#start').hasClass('inactive')){return};
         gameOver = 0;
         initDraw();
         $('button#hit').removeClass('inactive');
         $('button#stand').removeClass('inactive');
-})
+        if ($(`#player div.card:eq(0) p`).html() == $(`#player div.card:eq(1) p`).html()) {
+            $('button#split').removeClass('inactive');
+        }
+    })
 
+    // Stand button
     $('button#stand').click(function(e){
         stood = 1;
         checkResult();
-        if ((computerScore[0] >= playerScore[0])&&(computerScore[0]<=21)&&(computerScore[0]>16)){
+        if ((computerScore[0] > playerScore[0])&&(computerScore[0]<=21)&&(computerScore[0]>16)){
             gameOver = 1;
-            $('button#hit').addClass('inactive');
-            $('button#stand').addClass('inactive');
-            $('button#again').removeClass('inactive');
-            $('button#dd').addClass('inactive');
-            $('button#surrender').addClass('inactive');
             $('#computer .overlay').html(`Dealer won(${computerScore[0]} pts)`);
-            $('#computer .overlay').addClass('win');
             $('#player .overlay').html(`You lose( with )${playerScore[0]} pts)`);
-            $('#player .overlay').addClass('lose');
+            showResult('computer');
             payout('computer');
         }
         setTimeout(function(){
@@ -111,7 +113,6 @@ $(function(){
     })
 
     // Next round button
-
     $('button#again').click(function(){
         $('div.card').html('');
         $('.overlay').removeClass('win');
@@ -126,6 +127,7 @@ $(function(){
         $('button#hit').addClass('inactive');
         $('button#stand').addClass('inactive');
         $('button#again').addClass('inactive');
+        $('button#split').addClass('inactive');
         $('button#dd').addClass('inactive');
         $('button#surrender').addClass('inactive');
         $('button#start').removeClass('inactive');
@@ -145,7 +147,6 @@ $(function(){
     })
 
     // Bet 100 button
-
     $('button#bet').click(function(){
         if ($('button#bet').hasClass('inactive')){return};
         playerMoney -= 100;
@@ -154,8 +155,7 @@ $(function(){
         $('#table p').html(tableMoney);
     })
 
-    // Double Down
-
+    // Double Down button
     $('button#dd').click(function(){
         if ($('button#dd').hasClass('inactive')){return};
         setTimeout(function(){
@@ -171,11 +171,11 @@ $(function(){
             },500)
         },500)
         
-
         $('button#hit').addClass('inactive');
         $('button#stand').addClass('inactive');
     })
-
+    
+    // Surrrender button
     $('button#surrender').click(function(){
         if ($('button#surrender').hasClass('inactive')){return};
         playerMoney += tableMoney/2;
@@ -184,18 +184,24 @@ $(function(){
         $('#table p').html(tableMoney);
 
         gameOver = 1;
-        $('button#again').removeClass('inactive');
-        $('button#hit').addClass('inactive');
-        $('button#stand').addClass('inactive');
-        $('button#dd').addClass('inactive');
-        $('button#surrender').addClass('inactive');
         $('#computer .overlay').html(`Dealer won`);
-        $('#computer .overlay').addClass('win');
         $('#player .overlay').html(`You surrendered`);
-        $('#player .overlay').addClass('lose');
+        showResult('computer');
 
     })
 
+    // Split button
+    $('button#split').click(function(){
+        //Not ready
+        // $(`#player div.card:eq(${playerRound})`).fadeToggle();
+        // card = getRandomCard(deck);
+        // $(`#player div.card:eq(${playerRound})`).append(`<img src="./images/${card[0]}.png"></img>`);
+        // $(`#player div.card:eq(${playerRound})`).append(`<p>${card[1]}</p>`);
+        // getNumber(playerScore,card[1]);
+        // $('#player h2').html(`Player Score: ${playerScore[0]}`)
+        // checkResult();
+
+    })
 })
 
 function computerDrawCard(){
@@ -209,18 +215,17 @@ function computerDrawCard(){
         checkResult();
         computerRound ++;
         if (stood) {
-            if ((computerScore[0] >= playerScore[0])&&(computerScore[0]<=21)){
+            if ((computerScore[0] > playerScore[0])&&(computerScore[0]<=21)){
                 gameOver = 1;
-                $('button#again').removeClass('inactive');
-                $('button#hit').addClass('inactive');
-                $('button#stand').addClass('inactive');
-                $('button#dd').addClass('inactive');
-                $('button#surrender').addClass('inactive');
                 $('#computer .overlay').html(`Dealer won(${computerScore[0]} pts)`);
-                $('#computer .overlay').addClass('win');
                 $('#player .overlay').html(`You lose(${playerScore[0]} pts)`);
-                $('#player .overlay').addClass('lose');
+                showResult('computer');
                 payout('computer');
+            } else if (computerScore[0] == playerScore[0]) {
+                gameOver = 1;
+                $('#computer .overlay').html(`Push`);
+                $('#player .overlay').html(`Push`);
+                showResult('push');
             }
         }
     }
@@ -260,49 +265,43 @@ function getNumber(user,cardno){
 }
 
 function checkResult(){
-    if (computerScore[0] > 21){
+
+    if ((playerScore[0] != 21)&&(playerRound == 2)&&(computerRound == 1)&&(computerScore[0] == 21)) {
         gameOver = 1;
-        $('button#again').removeClass('inactive');
-        $('button#hit').addClass('inactive');
-        $('button#stand').addClass('inactive');
-        $('button#dd').addClass('inactive');
-        $('button#surrender').addClass('inactive');
+        $('#player .overlay').html(`Lose`);
+        $('#computer .overlay').html(`Blackjack`);
+        showResult('computer');
+        payout('computer');
+    } else if ((playerScore[0] == 21)&&(playerRound == 2)&&(computerRound == 1)&&(computerScore[0] != 21)) {
+        gameOver = 1;
+        tableMoney = tableMoney * 1.25;
+        $('#player .overlay').html(`Blackjack`);
+        $('#computer .overlay').html(`Lose`);
+        showResult('player');
+        payout('player');
+    } else if (computerScore[0] > 21){
+        gameOver = 1;
         $('#player .overlay').html(`You won(${playerScore[0]} pts)`);
-        $('#player .overlay').addClass('win');
         $('#computer .overlay').html(`Dealer busted(${computerScore[0]} pts)`);
-        $('#computer .overlay').addClass('lose');
+        showResult('player');
         payout('player');
     } else if (playerScore[0] > 21){
         gameOver = 1;
-        $('button#again').removeClass('inactive');
-        $('button#hit').addClass('inactive');
-        $('button#stand').addClass('inactive');
-        $('button#dd').addClass('inactive');
-        $('button#surrender').addClass('inactive');
         $('#computer .overlay').html(`Dealer won(${computerScore[0]} pts)`);
-        $('#computer .overlay').addClass('win');
         $('#player .overlay').html(`You busted(${playerScore[0]} pts)`);
-        $('#player .overlay').addClass('lose');
+        showResult('computer');
         payout('computer');
     } else if (computerRound > 3) {
-        // Need to consider playerRound as well
         gameOver = 1;
-        $('button#again').removeClass('inactive');
-        $('button#hit').addClass('inactive');
-        $('button#stand').addClass('inactive');
-        $('button#dd').addClass('inactive');
-        $('button#surrender').addClass('inactive');
-        if (computerScore[0] >= playerScore[0]) {
+        if (computerScore[0] > playerScore[0]) {
             $('#computer .overlay').html(`Dealer won(${computerScore[0]} pts)`);
-            $('#computer .overlay').addClass('win');
             $('#player .overlay').html(`You lose(${playerScore[0]} pts)`);
-            $('#player .overlay').addClass('lose');
+            showResult('computer');
             payout('computer');
         } else {
             $('#player .overlay').html(`You won(${playerScore[0]} pts)`);
-            $('#player .overlay').addClass('win');
             $('#computer .overlay').html(`Dealer lose(${computerScore[0]} pts)`);
-            $('#computer .overlay').addClass('lose');
+            showResult('player');
             payout('player');
         }
     }
@@ -320,6 +319,23 @@ function payout(winner){
     }
 }
 
+function showResult(winner){
+    $('button#again').removeClass('inactive');
+    $('button#hit').addClass('inactive');
+    $('button#stand').addClass('inactive');
+    $('button#dd').addClass('inactive');
+    $('button#surrender').addClass('inactive');
+    if (winner == 'player') {
+        $('#player .overlay').addClass('win');
+        $('#computer .overlay').addClass('lose');
+    } else if (winner == 'computer') {
+        $('#computer .overlay').addClass('win');
+        $('#player .overlay').addClass('lose');
+    } else if (winner == 'push') {
+        $('#computer .overlay').addClass('push');
+        $('#player .overlay').addClass('push');
+    }
+}
 
 
 function shuffle(arr) {
