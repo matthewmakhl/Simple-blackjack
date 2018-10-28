@@ -72,6 +72,9 @@ $(function(){
                             (firstComCard[1]=='A')){
                             $('button#surrender').removeClass('inactive');
                         }
+                        if ($(`#player div.card:eq(0) p`).html() == $(`#player div.card:eq(1) p`).html()) {
+                            $('button#split').removeClass('inactive');
+                        }
                     },(500));
                 },(500));
             },(500));
@@ -85,9 +88,6 @@ $(function(){
         initDraw();
         $('button#hit').removeClass('inactive');
         $('button#stand').removeClass('inactive');
-        if ($(`#player div.card:eq(0) p`).html() == $(`#player div.card:eq(1) p`).html()) {
-            $('button#split').removeClass('inactive');
-        }
     })
 
     // Stand button
