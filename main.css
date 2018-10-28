@@ -5,7 +5,9 @@ body {
 
 header {
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -21,7 +23,9 @@ header {
 
 small {
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -66,7 +70,9 @@ section#player {
 
 section.main {
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -81,7 +87,9 @@ section.main {
 
 section.main section {
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -102,7 +110,9 @@ div.card{
     margin: 20px;
     background-color: #bbb;
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -116,7 +126,9 @@ footer {
     background-color: #888;
     height: 10vh;
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -131,7 +143,9 @@ footer {
 
 .button-row {
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -243,7 +257,9 @@ section#money {
     border-bottom-left-radius: 100px;
     border-bottom-right-radius: 100px;
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -257,7 +273,9 @@ section#money {
     /* background-color: #FFFFAA; */
     border-radius: 10px;
     display: -webkit-box;
+    display: -moz-box;
     display: -ms-flexbox;
+    display: -webkit-flex; 
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;

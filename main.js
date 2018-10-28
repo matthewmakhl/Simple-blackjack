@@ -84,6 +84,17 @@ $(function(){
         },(500));
     }
 
+    // All-In button
+    $('button#allin').click(function(){
+        if ($('button#allin').hasClass('inactive')){return};
+        if (playerMoney>=0) {
+            tableMoney = playerMoney;
+            playerMoney = 0;
+            $('#hand p').html(0);
+            $('button#start').trigger('click');
+        }
+    })
+
     // Start button
     $('button#start').click(function(){
         if ($('button#start').hasClass('inactive')){return};
@@ -92,6 +103,7 @@ $(function(){
         initDraw();
         $('button#hit').removeClass('inactive');
         $('button#stand').removeClass('inactive');
+        $('button#allin').addClass('inactive');
     })
 
     // Stand button
@@ -158,6 +170,7 @@ $(function(){
         $('button#dd').addClass('inactive');
         $('button#surrender').addClass('inactive');
         $('button#start').removeClass('inactive');
+        $('button#allin').removeClass('inactive');
         // $('button#bet').removeClass('inactive');
         $('#player h2').html(`Player Score: 0`)
         $('#computer h2').html(`Dealer Score: 0`)
@@ -237,90 +250,32 @@ $(function(){
 
     // bet up and down button
     function initBet(){
-        $(`#table div:eq(0) i.fa-arrow-circle-up`).click(function(){
-            if ((parseInt($(`#table div:eq(0) p`).html())>-1)&&
-                (parseInt($(`#table div:eq(0) p`).html())<9)
-            ){
-                $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())+1);
-                playerMoney -= 1000;
-                tableMoney += 1000;
+        for (let i = 0; i<4;i++){
+            $(`#table div:eq(${i}) i.fa-arrow-circle-up`).click(function(){
+                if ($(`#table div:eq(${i}) p`).html()=='9'){
+                    $(`#table div:eq(${i}) p`).html('0');
+                    playerMoney += (9*(Math.pow(10,(3-i))));
+                    tableMoney -= (9*(Math.pow(10,(3-i))));
+                } else {
+                    $(`#table div:eq(${i}) p`).html(parseInt($(`#table div:eq(${i}) p`).html())+1);
+                    playerMoney -= (1*(Math.pow(10,(3-i))));
+                    tableMoney += (1*(Math.pow(10,(3-i))));
+                }
                 $('#hand p').html(playerMoney);
-            }
-        })
-        $(`#table div:eq(0) i.fa-arrow-circle-down`).click(function(){
-            if ((parseInt($(`#table div:eq(0) p`).html())>0)&&
-                (parseInt($(`#table div:eq(0) p`).html())<10)
-            ){
-                $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())-1);
-                playerMoney += 1000;
-                tableMoney -= 1000;
+            })
+            $(`#table div:eq(${i}) i.fa-arrow-circle-down`).click(function(){
+                if ($(`#table div:eq(${i}) p`).html()=='0'){
+                    $(`#table div:eq(${i}) p`).html('9');
+                    playerMoney -= (9*(Math.pow(10,(3-i))));
+                    tableMoney += (9*(Math.pow(10,(3-i))));
+                } else {
+                    $(`#table div:eq(${i}) p`).html(parseInt($(`#table div:eq(${i}) p`).html())-1);
+                    playerMoney += (1*(Math.pow(10,(3-i))));
+                    tableMoney -= (1*(Math.pow(10,(3-i))));
+                }
                 $('#hand p').html(playerMoney);
-            }
-        })
-    
-        $(`#table div:eq(1) i.fa-arrow-circle-up`).click(function(){
-            if ((parseInt($(`#table div:eq(1) p`).html())>-1)&&
-                (parseInt($(`#table div:eq(1) p`).html())<9)
-            ){
-                $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())+1);
-                playerMoney -= 100;
-                tableMoney += 100;
-                $('#hand p').html(playerMoney);
-            }
-        })
-        $(`#table div:eq(1) i.fa-arrow-circle-down`).click(function(){
-            if ((parseInt($(`#table div:eq(1) p`).html())>0)&&
-                (parseInt($(`#table div:eq(1) p`).html())<10)
-            ){
-                $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())-1);
-                playerMoney += 100;
-                tableMoney -= 100;
-                $('#hand p').html(playerMoney);
-            }
-        })
-        
-        $(`#table div:eq(2) i.fa-arrow-circle-up`).click(function(){
-            if ((parseInt($(`#table div:eq(2) p`).html())>-1)&&
-                (parseInt($(`#table div:eq(2) p`).html())<9)
-            ){
-                $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())+1);
-                playerMoney -= 10;
-                tableMoney += 10;
-                $('#hand p').html(playerMoney);
-            }
-        })
-        $(`#table div:eq(2) i.fa-arrow-circle-down`).click(function(){
-            if ((parseInt($(`#table div:eq(2) p`).html())>0)&&
-                (parseInt($(`#table div:eq(2) p`).html())<10)
-            ){
-                $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())-1);
-                playerMoney += 10;
-                tableMoney -= 10;
-                $('#hand p').html(playerMoney);
-            }
-        })
-        
-        
-        $(`#table div:eq(3) i.fa-arrow-circle-up`).click(function(){
-            if ((parseInt($(`#table div:eq(3) p`).html())>-1)&&
-                (parseInt($(`#table div:eq(3) p`).html())<9)
-            ){
-                $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())+1);
-                playerMoney -= 1;
-                tableMoney += 1;
-                $('#hand p').html(playerMoney);
-            }
-        })
-        $(`#table div:eq(3) i.fa-arrow-circle-down`).click(function(){
-            if ((parseInt($(`#table div:eq(3) p`).html())>0)&&
-                (parseInt($(`#table div:eq(3) p`).html())<10)
-            ){
-                $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())-1);
-                playerMoney += 1;
-                tableMoney -= 1;
-                $('#hand p').html(playerMoney);
-            }
-        })
+            })
+        } 
     }
     initBet();
 
