@@ -1,7 +1,7 @@
 let oriDeck = [
     ['spade','A'],['spade','2'],['spade','3'],['spade','4'],['spade','5'],['spade','6'],['spade','7'],['spade','8'],['spade','9'],['spade','10'],['spade','J'],['spade','Q'],['spade','K'],['heart','A'],['heart','2'],['heart','3'],['heart','4'],['heart','5'],['heart','6'],['heart','7'],['heart','8'],['heart','9'],['heart','10'],['heart','J'],['heart','Q'],['heart','K'],['club','A'],['club','2'],['club','3'],['club','4'],['club','5'],['club','6'],['club','7'],['club','8'],['club','9'],['club','10'],['club','J'],['club','Q'],['club','K'],['diamond','A'],['diamond','2'],['diamond','3'],['diamond','4'],['diamond','5'],['diamond','6'],['diamond','7'],['diamond','8'],['diamond','9'],['diamond','10'],['diamond','J'],['diamond','Q'],['diamond','K']]
 
-let deck = oriDeck;
+let deck = oriDeck.slice(); // Need the .slice() to copy the deck instead of point to
 let playerRound = 0;
 let computerRound = 0;
 let card = [];
@@ -47,6 +47,7 @@ $(function(){
                 checkResult();
                 playerRound ++;
                 $('button#dd').addClass('inactive');
+                $('button#surrender').addClass('inactive');
             } else {
                 $('button#stand').trigger('click')
             }
@@ -117,6 +118,7 @@ $(function(){
         $('div.card').html('');
         $('.overlay').removeClass('win');
         $('.overlay').removeClass('lose');
+        $('.overlay').removeClass('push');
         for (;playerRound<6;playerRound++){
             $(`#player div.card:eq(${playerRound})`).fadeToggle();
         }
@@ -134,7 +136,7 @@ $(function(){
         $('button#bet').removeClass('inactive');
         $('#player h2').html(`Player Score: 0`)
         $('#computer h2').html(`Dealer Score: 0`)
-        deck = oriDeck;
+        deck = oriDeck.slice();
         playerRound = 0;
         computerRound = 0;
         card = [];
