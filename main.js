@@ -18,8 +18,8 @@ let stood = 0;
 let playerMoney = 2000;
 let tableMoney = 0;
 
-// Pending feature: Split, Insurance, Bet money of choice
-// Testing feature: Push, Blackjack
+// Pending feature: Split, Insurance
+// Testing feature: Push, Blackjack, Bet money of choice
 // Added feature Bet, Start, Hit, Stand, Next Round, Double Down, Surrender, 
 
 $(function(){
@@ -65,16 +65,18 @@ $(function(){
                     $('button#hit').trigger('click')
                     setTimeout(function(){
                         computerDrawCard()
-                        $('button#dd').removeClass('inactive');
-                        if ((firstComCard[1]=='10')||
-                            (firstComCard[1]=='J')||
-                            (firstComCard[1]=='Q')||
-                            (firstComCard[1]=='K')||
-                            (firstComCard[1]=='A')){
-                            $('button#surrender').removeClass('inactive');
-                        }
-                        if ($(`#player div.card:eq(0) p`).html() == $(`#player div.card:eq(1) p`).html()) {
-                            $('button#split').removeClass('inactive');
+                        if (!gameOver){
+                            $('button#dd').removeClass('inactive');
+                            if ((firstComCard[1]=='10')||
+                                (firstComCard[1]=='J')||
+                                (firstComCard[1]=='Q')||
+                                (firstComCard[1]=='K')||
+                                (firstComCard[1]=='A')){
+                                $('button#surrender').removeClass('inactive');
+                            }
+                            if ($(`#player div.card:eq(0) p`).html() == $(`#player div.card:eq(1) p`).html()) {
+                                $('button#split').removeClass('inactive');
+                            }
                         }
                     },(500));
                 },(500));
@@ -85,6 +87,7 @@ $(function(){
     // Start button
     $('button#start').click(function(){
         if ($('button#start').hasClass('inactive')){return};
+        $('#table').html(`<i class="fas fa-coins"></i><p>${tableMoney}</p>`);
         gameOver = 0;
         initDraw();
         $('button#hit').removeClass('inactive');
@@ -119,6 +122,28 @@ $(function(){
         $('.overlay').removeClass('win');
         $('.overlay').removeClass('lose');
         $('.overlay').removeClass('push');
+        $('#table').html(`<i class="fas fa-coins"></i>
+        <div class="bet thousand">
+            <i class="fas fa-arrow-circle-up"></i>
+            <p>0</p>
+            <i class="fas fa-arrow-circle-down"></i>
+        </div>
+        <div class="bet hundred">
+            <i class="fas fa-arrow-circle-up"></i>
+            <p>0</p>
+            <i class="fas fa-arrow-circle-down"></i>
+        </div>
+        <div class="bet ten">
+            <i class="fas fa-arrow-circle-up"></i>
+            <p>0</p>
+            <i class="fas fa-arrow-circle-down"></i>
+        </div>
+        <div class="bet one">
+            <i class="fas fa-arrow-circle-up"></i>
+            <p>0</p>
+            <i class="fas fa-arrow-circle-down"></i>
+        </div>`);
+        initBet();
         for (;playerRound<6;playerRound++){
             $(`#player div.card:eq(${playerRound})`).fadeToggle();
         }
@@ -211,91 +236,93 @@ $(function(){
     })
 
     // bet up and down button
-    $(`#table div:eq(0) i.fa-arrow-circle-up`).click(function(){
-        if ((parseInt($(`#table div:eq(0) p`).html())>-1)&&
-            (parseInt($(`#table div:eq(0) p`).html())<9)
-        ){
-            $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())+1);
-            playerMoney -= 1000;
-            tableMoney += 1000;
-            $('#hand p').html(playerMoney);
-        }
-    })
-    $(`#table div:eq(0) i.fa-arrow-circle-down`).click(function(){
-        if ((parseInt($(`#table div:eq(0) p`).html())>0)&&
-            (parseInt($(`#table div:eq(0) p`).html())<10)
-        ){
-            $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())-1);
-            playerMoney += 1000;
-            tableMoney -= 1000;
-            $('#hand p').html(playerMoney);
-        }
-    })
-
-    $(`#table div:eq(1) i.fa-arrow-circle-up`).click(function(){
-        if ((parseInt($(`#table div:eq(1) p`).html())>-1)&&
-            (parseInt($(`#table div:eq(1) p`).html())<9)
-        ){
-            $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())+1);
-            playerMoney -= 100;
-            tableMoney += 100;
-            $('#hand p').html(playerMoney);
-        }
-    })
-    $(`#table div:eq(1) i.fa-arrow-circle-down`).click(function(){
-        if ((parseInt($(`#table div:eq(1) p`).html())>0)&&
-            (parseInt($(`#table div:eq(1) p`).html())<10)
-        ){
-            $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())-1);
-            playerMoney += 100;
-            tableMoney -= 100;
-            $('#hand p').html(playerMoney);
-        }
-    })
+    function initBet(){
+        $(`#table div:eq(0) i.fa-arrow-circle-up`).click(function(){
+            if ((parseInt($(`#table div:eq(0) p`).html())>-1)&&
+                (parseInt($(`#table div:eq(0) p`).html())<9)
+            ){
+                $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())+1);
+                playerMoney -= 1000;
+                tableMoney += 1000;
+                $('#hand p').html(playerMoney);
+            }
+        })
+        $(`#table div:eq(0) i.fa-arrow-circle-down`).click(function(){
+            if ((parseInt($(`#table div:eq(0) p`).html())>0)&&
+                (parseInt($(`#table div:eq(0) p`).html())<10)
+            ){
+                $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())-1);
+                playerMoney += 1000;
+                tableMoney -= 1000;
+                $('#hand p').html(playerMoney);
+            }
+        })
     
-    $(`#table div:eq(2) i.fa-arrow-circle-up`).click(function(){
-        if ((parseInt($(`#table div:eq(2) p`).html())>-1)&&
-            (parseInt($(`#table div:eq(2) p`).html())<9)
-        ){
-            $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())+1);
-            playerMoney -= 10;
-            tableMoney += 10;
-            $('#hand p').html(playerMoney);
-        }
-    })
-    $(`#table div:eq(2) i.fa-arrow-circle-down`).click(function(){
-        if ((parseInt($(`#table div:eq(2) p`).html())>0)&&
-            (parseInt($(`#table div:eq(2) p`).html())<10)
-        ){
-            $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())-1);
-            playerMoney += 10;
-            tableMoney -= 10;
-            $('#hand p').html(playerMoney);
-        }
-    })
-    
-    
-    $(`#table div:eq(3) i.fa-arrow-circle-up`).click(function(){
-        if ((parseInt($(`#table div:eq(3) p`).html())>-1)&&
-            (parseInt($(`#table div:eq(3) p`).html())<9)
-        ){
-            $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())+1);
-            playerMoney -= 1;
-            tableMoney += 1;
-            $('#hand p').html(playerMoney);
-        }
-    })
-    $(`#table div:eq(3) i.fa-arrow-circle-down`).click(function(){
-        if ((parseInt($(`#table div:eq(3) p`).html())>0)&&
-            (parseInt($(`#table div:eq(3) p`).html())<10)
-        ){
-            $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())-1);
-            playerMoney += 1;
-            tableMoney -= 1;
-            $('#hand p').html(playerMoney);
-        }
-    })
-    
+        $(`#table div:eq(1) i.fa-arrow-circle-up`).click(function(){
+            if ((parseInt($(`#table div:eq(1) p`).html())>-1)&&
+                (parseInt($(`#table div:eq(1) p`).html())<9)
+            ){
+                $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())+1);
+                playerMoney -= 100;
+                tableMoney += 100;
+                $('#hand p').html(playerMoney);
+            }
+        })
+        $(`#table div:eq(1) i.fa-arrow-circle-down`).click(function(){
+            if ((parseInt($(`#table div:eq(1) p`).html())>0)&&
+                (parseInt($(`#table div:eq(1) p`).html())<10)
+            ){
+                $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())-1);
+                playerMoney += 100;
+                tableMoney -= 100;
+                $('#hand p').html(playerMoney);
+            }
+        })
+        
+        $(`#table div:eq(2) i.fa-arrow-circle-up`).click(function(){
+            if ((parseInt($(`#table div:eq(2) p`).html())>-1)&&
+                (parseInt($(`#table div:eq(2) p`).html())<9)
+            ){
+                $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())+1);
+                playerMoney -= 10;
+                tableMoney += 10;
+                $('#hand p').html(playerMoney);
+            }
+        })
+        $(`#table div:eq(2) i.fa-arrow-circle-down`).click(function(){
+            if ((parseInt($(`#table div:eq(2) p`).html())>0)&&
+                (parseInt($(`#table div:eq(2) p`).html())<10)
+            ){
+                $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())-1);
+                playerMoney += 10;
+                tableMoney -= 10;
+                $('#hand p').html(playerMoney);
+            }
+        })
+        
+        
+        $(`#table div:eq(3) i.fa-arrow-circle-up`).click(function(){
+            if ((parseInt($(`#table div:eq(3) p`).html())>-1)&&
+                (parseInt($(`#table div:eq(3) p`).html())<9)
+            ){
+                $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())+1);
+                playerMoney -= 1;
+                tableMoney += 1;
+                $('#hand p').html(playerMoney);
+            }
+        })
+        $(`#table div:eq(3) i.fa-arrow-circle-down`).click(function(){
+            if ((parseInt($(`#table div:eq(3) p`).html())>0)&&
+                (parseInt($(`#table div:eq(3) p`).html())<10)
+            ){
+                $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())-1);
+                playerMoney += 1;
+                tableMoney -= 1;
+                $('#hand p').html(playerMoney);
+            }
+        })
+    }
+    initBet();
 
 })
 
@@ -321,6 +348,10 @@ function computerDrawCard(){
                 $('#computer .overlay').html(`Push`);
                 $('#player .overlay').html(`Push`);
                 showResult('push');
+                playerMoney += tableMoney;
+                tableMoney = 0;
+                $('#hand p').html(playerMoney);
+                $('#table p').html(tableMoney);
             }
         }
     }
