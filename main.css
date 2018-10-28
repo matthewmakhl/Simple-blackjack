@@ -4,16 +4,28 @@ body {
 }
 
 header {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-flow: wrap column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: wrap column;
+            flex-flow: wrap column;
     height: 10vh;
 }
 
 small {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 small a#help {
@@ -53,17 +65,33 @@ section#player {
 }
 
 section.main {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-flow: column wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column wrap;
+            flex-flow: column wrap;
 }
 
 section.main section {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-flow: row wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row wrap;
+            flex-flow: row wrap;
     height: 240px;
 }
 
@@ -73,26 +101,47 @@ div.card{
     width: 120px;
     margin: 20px;
     background-color: #bbb;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
     color: black;
 }
 
 footer {
     background-color: #888;
     height: 10vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-flow: column wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column wrap;
+            flex-flow: column wrap;
 }
 
 .button-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-flow: row wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row wrap;
+            flex-flow: row wrap;
 }
 
 button {
@@ -108,13 +157,15 @@ button {
 
 button.active {
     background: #888;
-    transform: translateY(4px);
+    -webkit-transform: translateY(4px);
+            transform: translateY(4px);
     border-bottom: none;
 }
 
 button.inactive {
     /* background-color: #bbb; */
     /* border-bottom: none; */
+    -webkit-transition: display 1s;
     transition: display 1s;
     display: none;
 }
@@ -140,6 +191,7 @@ p {
     position: absolute;
     opacity: 0;
     background-color: #64B058;
+    -webkit-transition: opacity 1s;
     transition: opacity 1s;
     /* line-height: 32vh; */
     text-align: center;
@@ -190,18 +242,28 @@ section#money {
     border-top-right-radius: 10px;
     border-bottom-left-radius: 100px;
     border-bottom-right-radius: 100px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
 }
 
 #money #hand{
     grid-area: hand;
     /* background-color: #FFFFAA; */
     border-radius: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
     color: white;
 }
 
@@ -210,9 +272,14 @@ section#money {
     margin: auto 0;
 }
 
+#table div.bet i {
+    cursor: pointer;
+    color: #333;
+}
+
 @media (max-width: 768px) {
 
-    h1 {
+    h1 a {
         font-size: 28px;
     }
 
@@ -230,9 +297,15 @@ section#money {
         height: 90px;
         width: 50px;
         margin: 5px;
-        flex-flow: column wrap;
-        justify-content: center;
-        align-content: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-flow: column wrap;
+                flex-flow: column wrap;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -ms-flex-line-pack: center;
+            align-content: center;
     }
 
     button {

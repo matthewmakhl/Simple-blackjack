@@ -35,7 +35,7 @@ $(function(){
     // Hit button
     $('button#hit').click(function(e){
         if (!gameOver) {
-            $('button#bet').addClass('inactive');
+            // $('button#bet').addClass('inactive');
             $('button#start').addClass('inactive');
             if (playerRound<5){
                 $(`#player div.card:eq(${playerRound})`).fadeToggle();
@@ -133,7 +133,7 @@ $(function(){
         $('button#dd').addClass('inactive');
         $('button#surrender').addClass('inactive');
         $('button#start').removeClass('inactive');
-        $('button#bet').removeClass('inactive');
+        // $('button#bet').removeClass('inactive');
         $('#player h2').html(`Player Score: 0`)
         $('#computer h2').html(`Dealer Score: 0`)
         deck = oriDeck.slice();
@@ -149,13 +149,18 @@ $(function(){
     })
 
     // Bet 100 button
-    $('button#bet').click(function(){
-        if ($('button#bet').hasClass('inactive')){return};
-        playerMoney -= 100;
-        tableMoney += 100;
-        $('#hand p').html(playerMoney);
-        $('#table p').html(tableMoney);
-    })
+    // $('button#bet').click(function(e){
+    //     e.preventDefault();
+    //     // prevent iphone user double tab here and zoom in
+
+    //     if ($('button#bet').hasClass('inactive')){return};
+    //     playerMoney -= 100;
+    //     tableMoney += 100;
+    //     $('#hand p').html(playerMoney);
+    //     $('#table p').html(tableMoney);
+
+        // $(this).click();
+    // })
 
     // Double Down button
     $('button#dd').click(function(){
@@ -204,6 +209,94 @@ $(function(){
         // checkResult();
 
     })
+
+    // bet up and down button
+    $(`#table div:eq(0) i.fa-arrow-circle-up`).click(function(){
+        if ((parseInt($(`#table div:eq(0) p`).html())>-1)&&
+            (parseInt($(`#table div:eq(0) p`).html())<9)
+        ){
+            $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())+1);
+            playerMoney -= 1000;
+            tableMoney += 1000;
+            $('#hand p').html(playerMoney);
+        }
+    })
+    $(`#table div:eq(0) i.fa-arrow-circle-down`).click(function(){
+        if ((parseInt($(`#table div:eq(0) p`).html())>0)&&
+            (parseInt($(`#table div:eq(0) p`).html())<10)
+        ){
+            $(`#table div:eq(0) p`).html(parseInt($(`#table div:eq(0) p`).html())-1);
+            playerMoney += 1000;
+            tableMoney -= 1000;
+            $('#hand p').html(playerMoney);
+        }
+    })
+
+    $(`#table div:eq(1) i.fa-arrow-circle-up`).click(function(){
+        if ((parseInt($(`#table div:eq(1) p`).html())>-1)&&
+            (parseInt($(`#table div:eq(1) p`).html())<9)
+        ){
+            $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())+1);
+            playerMoney -= 100;
+            tableMoney += 100;
+            $('#hand p').html(playerMoney);
+        }
+    })
+    $(`#table div:eq(1) i.fa-arrow-circle-down`).click(function(){
+        if ((parseInt($(`#table div:eq(1) p`).html())>0)&&
+            (parseInt($(`#table div:eq(1) p`).html())<10)
+        ){
+            $(`#table div:eq(1) p`).html(parseInt($(`#table div:eq(1) p`).html())-1);
+            playerMoney += 100;
+            tableMoney -= 100;
+            $('#hand p').html(playerMoney);
+        }
+    })
+    
+    $(`#table div:eq(2) i.fa-arrow-circle-up`).click(function(){
+        if ((parseInt($(`#table div:eq(2) p`).html())>-1)&&
+            (parseInt($(`#table div:eq(2) p`).html())<9)
+        ){
+            $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())+1);
+            playerMoney -= 10;
+            tableMoney += 10;
+            $('#hand p').html(playerMoney);
+        }
+    })
+    $(`#table div:eq(2) i.fa-arrow-circle-down`).click(function(){
+        if ((parseInt($(`#table div:eq(2) p`).html())>0)&&
+            (parseInt($(`#table div:eq(2) p`).html())<10)
+        ){
+            $(`#table div:eq(2) p`).html(parseInt($(`#table div:eq(2) p`).html())-1);
+            playerMoney += 10;
+            tableMoney -= 10;
+            $('#hand p').html(playerMoney);
+        }
+    })
+    
+    
+    $(`#table div:eq(3) i.fa-arrow-circle-up`).click(function(){
+        if ((parseInt($(`#table div:eq(3) p`).html())>-1)&&
+            (parseInt($(`#table div:eq(3) p`).html())<9)
+        ){
+            $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())+1);
+            playerMoney -= 1;
+            tableMoney += 1;
+            $('#hand p').html(playerMoney);
+        }
+    })
+    $(`#table div:eq(3) i.fa-arrow-circle-down`).click(function(){
+        if ((parseInt($(`#table div:eq(3) p`).html())>0)&&
+            (parseInt($(`#table div:eq(3) p`).html())<10)
+        ){
+            $(`#table div:eq(3) p`).html(parseInt($(`#table div:eq(3) p`).html())-1);
+            playerMoney += 1;
+            tableMoney -= 1;
+            $('#hand p').html(playerMoney);
+        }
+    })
+    
+
 })
 
 function computerDrawCard(){
