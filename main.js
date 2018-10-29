@@ -32,6 +32,12 @@ $(function(){
     $('button#dd').addClass('inactive');
     $('button#surrender').addClass('inactive');
 
+    if(
+        navigator.userAgent.match(/Android/i)&&
+        navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+        window.scrollTo(0,1);
+    }
+
     // Hit button
     $('button#hit').click(function(e){
         if (!gameOver) {
